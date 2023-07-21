@@ -1,5 +1,5 @@
-
-#pragma once
+#ifndef EXTT_TIMER_POOL_HPP
+#define EXTT_TIMER_POOL_HPP
 
 #include <vector>
 #include <entt/signal/dispatcher.hpp>
@@ -123,3 +123,5 @@ namespace extt
         entt::dispatcher dsp{};
     };
 }
+
+#endif
