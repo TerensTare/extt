@@ -15,8 +15,6 @@ namespace extt
      * #include <iostream>
      * #include <extt/timer_pool.hpp>
      *
-     * struct my_timer {};
-     *
      * void say_something()
      * {
      *   std::cout << "Hello, world!" << std::endl;
@@ -27,7 +25,7 @@ namespace extt
      *    extt::timer_pool<float> timers;
      *
      *    timers
-     *      .looping<my_timer>(1.f)
+     *      .looping<struct my_timer>(1.f)
      *      .connect<&say_something>();
      *
      *    while (true)
@@ -90,7 +88,7 @@ namespace extt
          *
          * @param dt The amount of time elapsed since the last update.
          */
-        constexpr void update(duration dt) noexcept
+        void update(duration dt) noexcept
         {
             for (auto &t : timers)
                 t.elapsed += dt;
@@ -109,7 +107,7 @@ namespace extt
             for (auto &t : loop_timers)
                 if (t.elapsed >= t.total)
                 {
-                    t.elapsed = {};
+                    t.elapsed -= t.total;
                     t.trigger(dsp);
                 }
 
