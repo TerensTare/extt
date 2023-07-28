@@ -37,8 +37,14 @@ namespace extt
      * }
      */
     template <typename Delta>
-    struct timer_pool final
+    class timer_pool final
     {
+        template <typename T>
+        struct tag final
+        {
+        };
+
+    public:
         /**
          * @brief The type of the delta time.
          */
@@ -60,8 +66,8 @@ namespace extt
         auto add(duration dt) noexcept
         {
             timers.push_back({{}, dt, +[](entt::dispatcher &dsp)
-                                      { dsp.trigger<Tag>(); }});
-            return dsp.sink<Tag>();
+                                      { dsp.trigger<tag<Tag>>(); }});
+            return dsp.sink<tag<Tag>>();
         }
 
         /**
@@ -75,8 +81,8 @@ namespace extt
         auto looping(duration dt) noexcept
         {
             loop_timers.push_back({{}, dt, +[](entt::dispatcher &dsp)
-                                           { dsp.enqueue<Tag>(); }});
-            return dsp.sink<Tag>();
+                                           { dsp.enqueue<tag<Tag>>(); }});
+            return dsp.sink<tag<Tag>>();
         }
 
         /**
